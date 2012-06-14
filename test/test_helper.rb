@@ -4,7 +4,7 @@ require 'minitest/unit'
 require 'minitest/autorun'
 require 'minitest/pride'
 
-require_relative '../lib/statik'
+require_relative '../lib/mass-rename'
 
 class TestCase < MiniTest::Unit::TestCase
   include MassRename
