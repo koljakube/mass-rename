@@ -39,4 +39,11 @@ class NameGeneratorTest < TestCase
     assert_equal 'foo 01', gen.next
   end
   
+  test 'can be used with a block' do
+    results = @names.collect.with_index{|name, index| "#{sprintf('%02d %s', index + 1, name)}"}.each
+    NameGenerator.new(@names, @nsg).each do |name|
+      assert_equal results.next, name
+    end
+  end
+  
 end

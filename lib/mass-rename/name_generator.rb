@@ -17,7 +17,7 @@ module MassRename
       if block_given?
         enum = @number_string_generator.each
         @names.each do |name|
-          yield format(num.next, name)
+          yield format(enum.next, name)
         end
       else
         Enumerator.new(@data)
