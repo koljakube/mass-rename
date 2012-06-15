@@ -2,43 +2,39 @@
 
 module MassRename
   class NumberStringGenerator
-    def initialize(options = {})
-      @start  = options.has_key?(:range) ? options[:range].min : 1
-      @end    = options.has_key?(:range) ? options[:range].max : nil
-      @number = @start
-      @width  = options.fetch(:width, nil)
-      @filler = options.fetch(:lead_with_spaces, false) ? ' ' : '0'
-    end
+    include Enumerable
     
-    def next_number
-      if not @end.nil? and @number > @end
-        return nil
-      end
-      result = formatted_number
-      @number = @number.next
-      result
+    def initialize(range, options = {})
+      width  = options.fetch(:width, nil)
+      filler = options.fetch(:lead_with_spaces, false) ? ' ' : '0'
+      @data   = generate_numbers(range, width, filler)
     end
-    
-    def all_numbers(&block)
-      raise RuntimeError.new "can't use all_numbers without an end" if @end.nil?
         
-      while @number <= @end
-        yield formatted_number
-        next!
+    def each
+      if block_given?
+        @data.each do |el|
+          yield el
+        end
+      else
+        Enumerator.new(@data)
       end
-      nil
     end
     
     private
     
-    def formatted_number
-      format_string = unless @width.nil?
-        "%#{@filler}#{@width}d"
+    def formatted_number(number, width, filler)
+      format_string = unless width.nil?
+        "%#{filler}#{width}d"
       else
         "%d"
       end
-      sprintf(format_string, @number)
+      sprintf(format_string, number)
     end
+    
+    def generate_numbers(range, width, filler)
+      Array(range).collect{|el| formatted_number(el, width, filler)}
+    end
+      
     
     def next!
       @number +=  1
