@@ -2,6 +2,8 @@
 
 module MassRename
   class NameGenerator
+    NUM_PLACEHOLDER  = '%num%'
+    NAME_PLACEHOLDER = '%name%'
     
     def initialize(names, number_string_generator, options = {})
       @names                   = names
@@ -24,16 +26,20 @@ module MassRename
       end
     end
     
+    def self.valid_format?(format)
+      (format =~ /#{NUM_PLACEHOLDER}/) or (format =~ /#{NAME_PLACEHOLDER}/)
+    end
+    
     private
         
     def format(num, name)
       unless @format.nil?
-        args = if (@format =~ /%num%/) < (@format =~ /%name%/)
+        args = if (@format =~ /#{NUM_PLACEHOLDER}/) < (@format =~ /#{NAME_PLACEHOLDER}/)
           [num, name]
         else
           [name, num]
         end
-        sprintf(@format.gsub(/%num%|%name%/, '%s'), *args)
+        sprintf(@format.gsub(/#{NUM_PLACEHOLDER}|#{NAME_PLACEHOLDER}/, '%s'), *args)
       else
         sprintf("%s%s%s%s%s", @prefix, num, @separator, name, @suffix)
       end
