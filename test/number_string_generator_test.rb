@@ -2,7 +2,7 @@
 
 require_relative 'test_helper'
 
-class NumberStringGeneratorText < TestCase
+class NumberStringGeneratorTest < TestCase
   
   test 'generates numbers as strings in sequential order' do
     gen = NumberStringGenerator.new(1..3).each
@@ -40,6 +40,13 @@ class NumberStringGeneratorText < TestCase
     assert_equal '-1', gen.next
     assert_equal  '0', gen.next
     assert_equal  '1', gen.next
+  end
+  
+  test 'supports variable width' do
+    results = (1..10).collect{|num| String(num)}.each
+    gen = NumberStringGenerator.new(1..10).each do |nstring|
+      assert_equal results.next, nstring
+    end
   end
     
 end
