@@ -1,6 +1,13 @@
-* prefix
-* suffix
+# TODO
+
 * embed number
 * number width
-* leading zeros and spaces
 * line by line rename with a file
+
+# Done
+
+## 2012-06-15
+
+* prefix
+* suffix
+* leading zeros and spaces
