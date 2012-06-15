@@ -8,6 +8,7 @@ module MassRename
       @number_string_generator = number_string_generator
       @prefix                  = options.fetch(:prefix, '')
       @suffix                  = options.fetch(:suffix, '')
+      @separator               = options.fetch(:separator, ' ')
       @format                  = options.fetch(:format, nil)
       @data                    = generate
     end
@@ -27,14 +28,14 @@ module MassRename
         
     def format(num, name)
       unless @format.nil?
-        args = if @format.find('%num%') < @format.find('%name%')
+        args = if (@format =~ /%num%/) < (@format =~ /%name%/)
           [num, name]
         else
           [name, num]
         end
         sprintf(@format.gsub(/%num%|%name%/, '%s'), *args)
       else
-        sprintf("%s%s %s%s", @prefix, num, name, @suffix)
+        sprintf("%s%s%s%s%s", @prefix, num, @separator, name, @suffix)
       end
     end
     
