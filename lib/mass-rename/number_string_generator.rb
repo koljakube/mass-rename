@@ -5,9 +5,10 @@ module MassRename
     include Enumerable
     
     def initialize(range, options = {})
-      width  = options.fetch(:width, nil)
-      filler = options.fetch(:lead_with_spaces, false) ? ' ' : '0'
-      @data   = generate_numbers(range, width, filler)
+      @range  = range
+      @width  = options.fetch(:width, nil)
+      @filler = options.fetch(:lead_with_spaces, false) ? ' ' : '0'
+      @data   = generate
     end
         
     def each
@@ -18,6 +19,10 @@ module MassRename
       else
         Enumerator.new(@data)
       end
+    end
+    
+    def self.needed_width(count)
+      String(count).length
     end
     
     private
@@ -31,13 +36,9 @@ module MassRename
       sprintf(format_string, number)
     end
     
-    def generate_numbers(range, width, filler)
-      Array(range).collect{|el| formatted_number(el, width, filler)}
+    def generate
+      Array(@range).collect{|el| formatted_number(el, @width, @filler)}
     end
-      
-    
-    def next!
-      @number +=  1
-    end
+       
   end
 end
