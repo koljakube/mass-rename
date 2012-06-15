@@ -1,29 +1,34 @@
-require 'optparse'
+# encoding: utf-8
 
+require 'optparse'
 require_relative 'name_generator'
 
 module MassRename
   class Options
 
     attr_reader :files
+    attr_reader :name_file
     attr_reader :minimum_width
     attr_reader :variable_width
     attr_reader :lead_with_spaces
+    attr_reader :start
     attr_reader :pretend
     attr_reader :prefix
     attr_reader :suffix
     attr_reader :separator
     attr_reader :format
     
-    def intialize(argv)
+    def initialize(argv)
       @pretend          = false
       @minimum_width    = nil
       @variable_width   = false
       @lead_with_spaces = false
+      @start            = 1
       @prefix           = ''
       @suffix           = ''
       @separator        = ' '
       @format           = nil
+      @name_file        = nil
       parse(argv)
       @files = argv
     end
@@ -43,6 +48,10 @@ module MassRename
           @pretend = false
         end
         
+        opts.on('-n', '--name-file=FILE', String, 'Read names for renaming from FILE') do |file|
+          @name_file = file
+        end
+        
         opts.on('-w', '--minimum-width=WIDTH', Integer, 'Force the number to be a minimum width (will be filled with zeros unless --space is set)') do |width|
           @minimum_width = width
         end
@@ -55,11 +64,15 @@ module MassRename
           @lead_with_spaces = true
         end
         
-        opts.on('-p', '--prefix PREFIX', 'Prefix the names with PREFIX') do |prefix|
+        opts.on('-S' ,'--start=NUM', Integer, 'Start counting at NUM') do |start|
+          @start = start
+        end  
+        
+        opts.on('-p', '--prefix=PREFIX', String, 'Prefix the names with PREFIX') do |prefix|
           @prefix = prefix
         end
 
-        opts.on('-s', '--suffix SUFFIX', 'Suffix the names with SUFFIX') do |suffix|
+        opts.on('-s', '--suffix=SUFFIX', String, 'Suffix the names with SUFFIX') do |suffix|
           @suffix = suffix
         end
         
@@ -67,7 +80,7 @@ module MassRename
           @separator = separator
         end
         
-        opts.on('--format FORMAT', String, "Completely define the naming format (#{NameGenerator.NUM_PLACEHOLDER} and #{NameGenerator.NAME_PLACEHOLDER} will be replaced). Overrides --prefix, --suffix and --separator") do |format|
+        opts.on('--format FORMAT', String, "Completely define the naming format (#{NameGenerator::NUM_PLACEHOLDER} and #{NameGenerator::NAME_PLACEHOLDER} will be replaced). Overrides --prefix, --suffix and --separator") do |format|
           @format = NameGenerator.valid_format? format ? format : nil
         end
         
