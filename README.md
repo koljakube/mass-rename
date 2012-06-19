@@ -3,6 +3,8 @@
 Use `mass-rename` to quickly rename a glob of files using numbering and 
 optionally a file containing one name on each line.
 
+It is also just me playing around trying to get used to TDD.
+
 ## Installation
 
 You probably only want to use this as a CLI utility. Get it via
