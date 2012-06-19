@@ -30,11 +30,17 @@ module MassRename
       ng_options[:separator] = @options.separator
       ng_options[:format]    = @options.format
       @name_generator = name_generator_class.new(names, @number_string_generator, ng_options)
+      
+      @renamer = Renamer.new(@options.files, @name_generator.names)
     end
     
     def run
-      @name_generator.each do |name|
-        puts name
+      unless @options.pretend
+        @renamer.rename!
+      else
+        @renamer.renames.each do |from, to|
+          puts "Would rename #{from} to #{to}."
+        end
       end
     end
     

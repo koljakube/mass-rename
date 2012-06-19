@@ -27,6 +27,10 @@ module MassRename
       end
     end
     
+    def names
+      @data
+    end
+    
     def self.valid_format?(format)
       (format =~ /#{NUM_PLACEHOLDER}/) or (format =~ /#{NAME_PLACEHOLDER}/)
     end
