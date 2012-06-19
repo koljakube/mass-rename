@@ -18,17 +18,18 @@ module MassRename
     attr_reader :separator
     attr_reader :format
     
-    def initialize(argv)
-      @pretend          = false
-      @minimum_width    = nil
-      @variable_width   = false
-      @lead_with_spaces = false
-      @start            = 1
-      @prefix           = ''
-      @suffix           = ''
-      @separator        = ' '
-      @format           = nil
-      @name_file        = nil
+    def initialize(argv, name_generator_class)
+      @name_generator_class = name_generator_class
+      @pretend              = false
+      @minimum_width        = nil
+      @variable_width       = false
+      @lead_with_spaces     = false
+      @start                = 1
+      @prefix               = ''
+      @suffix               = ''
+      @separator            = ' '
+      @format               = nil
+      @name_file            = nil
       parse(argv)
       @files = argv
     end
@@ -76,15 +77,20 @@ module MassRename
           @suffix = suffix
         end
         
-        opts.on('--separator SEP', String, 'Replace the space between number and name with SEP') do |separator|
+        opts.on('--separator=SEP', String, 'Replace the space between number and name with SEP') do |separator|
           @separator = separator
         end
         
-        opts.on('--format FORMAT', String, "Completely define the naming format (#{NameGenerator::NUM_PLACEHOLDER} and #{NameGenerator::NAME_PLACEHOLDER} will be replaced). Overrides --prefix, --suffix and --separator") do |format|
-          @format = NameGenerator.valid_format? format ? format : nil
+        opts.on('--format=FORMAT', String, "Completely define the naming format (#{@name_generator_class::NUM_PLACEHOLDER} and #{@name_generator_class::NAME_PLACEHOLDER} will be replaced). Overrides --prefix, --suffix and --separator") do |format|
+          @format = @name_generator_class.valid_format?(format) ? format : nil
         end
         
-        puts opts
+        begin
+          argv = ['--help'] if argv.empty?
+          opts.parse!(argv)
+        rescue OptionParser::ParseError => e
+          STDERR.puts e.message, "\n", opts
+        end
       end
     end
     

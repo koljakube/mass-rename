@@ -5,6 +5,8 @@ require 'minitest/autorun'
 require 'minitest/pride'
 
 require_relative '../lib/mass-rename'
+require_relative '../lib/mass-rename/runner'
+
 
 class TestCase < MiniTest::Unit::TestCase
   include MassRename

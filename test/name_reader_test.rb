@@ -14,11 +14,13 @@ class NameReaderTest < TestCase
   test 'accepts a file name' do # FIXME: This is not too nice
     class TestFile
       def self.read(filename)
-        assert
-        %w{foo bar baz}.collect{|el| el.gsub(' ', "\n")}.join('')
+        %w{foo bar baz}.join("\n")
       end
     end
-    reader = NameReader.new('whatever', TestFile)
+    reader = NameReader.new('whatever', TestFile).each
+    assert 'foo', reader.next
+    assert 'bar', reader.next
+    assert 'baz', reader.next
   end
   
 end
