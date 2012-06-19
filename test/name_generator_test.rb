@@ -46,4 +46,11 @@ class NameGeneratorTest < TestCase
     end
   end
   
+  test 'creates not seperator with an empty name' do
+    gen = NameGenerator.new([''] * @names.count, @nsg).each
+    assert_equal '01', gen.next
+    assert_equal '02', gen.next
+    assert_equal '03', gen.next
+  end
+  
 end

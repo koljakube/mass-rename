@@ -2,6 +2,7 @@
 
 module MassRename
   class NameGenerator
+
     NUM_PLACEHOLDER  = '%num%'
     NAME_PLACEHOLDER = '%name%'
     
@@ -39,9 +40,13 @@ module MassRename
         else
           [name, num]
         end
-        sprintf(@format.gsub(/#{NUM_PLACEHOLDER}|#{NAME_PLACEHOLDER}/, '%s'), *args)
+        sprintf(@format.gsub(/%num%|%name%/, '%s'), *args)
       else
-        sprintf("%s%s%s%s%s", @prefix, num, @separator, name, @suffix)
+        if name.empty?
+          sprintf("%s%s%s", @prefix, num, @suffix)
+        else
+          sprintf("%s%s%s%s%s", @prefix, num, @separator, name, @suffix)
+        end
       end
     end
     
