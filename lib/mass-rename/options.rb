@@ -45,6 +45,11 @@ module MassRename
           exit
         end
         
+        opts.on('-v', '--version', 'Print the version and exit') do
+          puts "MassRename v#{MassRename::VERSION}"
+          puts "Fork me on GitHub! <https://github.com/koljakube/mass-rename>"
+        end
+        
         opts.on('--pretend', 'Only print the renames, don\'t execute them') do
           @pretend = true
         end
