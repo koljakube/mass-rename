@@ -46,7 +46,7 @@ module MassRename
         end
         
         opts.on('--pretend', 'Only print the renames, don\'t execute them') do
-          @pretend = false
+          @pretend = true
         end
         
         opts.on('-n', '--name-file=FILE', String, 'Read names for renaming from FILE') do |file|
