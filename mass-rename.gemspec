@@ -4,8 +4,8 @@ require File.expand_path('../lib/mass-rename/version', __FILE__)
 Gem::Specification.new do |gem|
   gem.authors       = ["Kolja Kube"]
   gem.email         = ["kolja.kube@gmail.com"]
-  gem.description   = %q{TODO: Write a gem description}
-  gem.summary       = %q{TODO: Write a gem summary}
+  gem.description   = File.read('README.md')
+  gem.summary       = %q{A small utility to quickly rename files with numbering}
   gem.homepage      = ""
 
   gem.files         = `git ls-files`.split($\)

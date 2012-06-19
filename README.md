@@ -1,24 +1,27 @@
 # MassRename
 
-TODO: Write a gem description
+Use `mass-rename` to quickly rename a glob of files using numbering and 
+optionally a file containing one name on each line.
 
 ## Installation
 
-Add this line to your application's Gemfile:
-
-    gem 'mass-rename'
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
+You probably only want to use this as a CLI utility. Get it via
 
     $ gem install mass-rename
 
 ## Usage
 
-TODO: Write usage instructions here
+Run
+
+    $ mass-rename --help
+
+for a list of all options.
+
+A naming file (for `--names`) is expected to have one name on each line with
+no exceptions. If there are more names than files to rename, the extraneous
+names are ignored.
+
+
 
 ## Contributing
 
