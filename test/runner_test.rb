@@ -39,6 +39,10 @@ class RunnerTest < TestCase
       @format    = options[:format]
     end
     
+    def names
+      []
+    end
+    
     def self.instance
       @@instance
     end

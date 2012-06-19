@@ -2,6 +2,7 @@
 
 require_relative 'options'
 require_relative 'number_string_generator'
+require_relative 'name_reader'
 require_relative 'name_generator'
 
 module MassRename
