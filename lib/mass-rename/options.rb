@@ -1,6 +1,7 @@
 # encoding: utf-8
 
 require 'optparse'
+require_relative 'version'
 require_relative 'name_generator'
 
 module MassRename
