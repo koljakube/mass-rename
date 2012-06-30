@@ -8,7 +8,7 @@ module MassRename
     attr_reader :renames
     
     def initialize(filenames, names)
-      raise ArgumentError, "filenames and names can't have different element counts" unless filenames.length == names.length
+      raise ArgumentError, "there must not be fewer names than filenames" unless filenames.length <= names.length
       new_filenames = filenames.zip(names).collect{ |arr|
         if File.dirname(arr.first) != '.'
           File.join(File.dirname(arr.first), "#{arr.last}#{File.extname(arr.first)}")

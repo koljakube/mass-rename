@@ -4,6 +4,10 @@
 
 # Done
 
+## 2012-06-30
+
+* correctly handles newlines in name files
+
 ## 2012-06-15
 
 * prefix

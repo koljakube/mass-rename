@@ -8,7 +8,7 @@ module MassRename
       @data = if data.is_a? Array
         data
       else
-        reader_class.read(data).split("\n")
+        reader_class.read(data).split(/\n\r|\r\n|\n|\r/)
       end
     end
     

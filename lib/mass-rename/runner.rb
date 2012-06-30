@@ -41,7 +41,7 @@ module MassRename
         @renamer.rename!
       else
         @renamer.renames.each do |from, to|
-          puts "Would rename #{from} to #{to}."
+          puts "Would rename '#{from}' to '#{to}'."
         end
       end
     end
