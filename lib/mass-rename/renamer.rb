@@ -21,7 +21,7 @@ module MassRename
     
     def rename!
       @renames.each do |filename, new_filename|
-        FileUtils.mv filename, new_filename
+        FileUtils.mv filename, new_filename unless filename == new_filename
       end
     end
     
